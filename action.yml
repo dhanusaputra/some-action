@@ -1,10 +1,7 @@
-me: 'Hello World'
-description: 'Greet someone and record the time'
+me: 'Write Good'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  files:
     required: true
-    default: 'World'
 outputs:
   time: # id of output
     description: 'The time we greeted you'
