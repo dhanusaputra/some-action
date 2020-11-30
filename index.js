@@ -1,17 +1,19 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-// const writeGood = require('write-good');
+const writeGood = require('write-good');
+const fs = require('fs');
 
 try {
-  // `who-to-greet` input defined in action metadata file
   const files = core.getInput('files');
   console.log(`Hello ${files}!`);
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
-} catch (error) {
-  core.setFailed(error.message);
+  fs.readFile(files, 'utf8', (err, data) => {
+    if (err) core.setFailed(err);
+    const suggestions = writeGood(data);
+    if (suggestions.trim().length() > 0) core.setFailed(suggestions);
+  });
+} catch (err) {
+  core.setFailed(err.message);
 }
 
