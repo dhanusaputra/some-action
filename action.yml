@@ -3,8 +3,8 @@ inputs:
   files:
     required: true
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  time:
+    description: 'the time'
 runs:
   using: 'node12'
   main: 'index.js'
