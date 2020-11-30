@@ -11,7 +11,7 @@ try {
   fs.readFile(files, 'utf8', (err, data) => {
     if (err) core.setFailed(err);
     const suggestions = writeGood(data);
-    if (suggestions.length() > 0) core.setFailed(suggestions);
+    if (suggestions.length > 0) core.setFailed(suggestions);
   });
 } catch (err) {
   core.setFailed(err.message);
