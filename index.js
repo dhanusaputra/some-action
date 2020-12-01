@@ -7,8 +7,8 @@ const fileExt = ['md', 'markdown', 'mkdn', 'mkd', 'mdown'];
 
 try {
   const files = core.getInput('files').split(' ');
-  const output = execSync('ls', { encoding: 'utf-8' });
-  console.log(`Hello ${files}!`, typeof files, output);
+  const output = execSync('git ls-files', { encoding: 'utf-8' });
+  console.log(output);
   const time = (new Date()).toTimeString();
   core.setOutput('time', time);
   files.forEach((file) => {
@@ -16,7 +16,7 @@ try {
       fs.readFile(file, 'utf8', (err, data) => {
         if (err) core.setFailed(err);
         const suggestions = writeGood(data);
-        if (suggestions.length > 0) core.setFailed(suggestions);
+        if (suggestions.length > 0) core.setFailed(`file: ${file}, suggestions: ${suggestions}`);
       });
     }
   });
