@@ -6,9 +6,8 @@ const core = require('@actions/core');
 const fileExt = ['md', 'markdown', 'mkdn', 'mkd', 'mdown'];
 
 try {
-  const files = core.getInput('files').split(' ');
-  const output = execSync('git ls-files', { encoding: 'utf-8' });
-  console.log(output.split('\n'));
+  // const filess = core.getInput('files').split(' ');
+  const files = execSync('git ls-files', { encoding: 'utf-8' });
   const time = (new Date()).toTimeString();
   core.setOutput('time', time);
   files.forEach((file) => {
