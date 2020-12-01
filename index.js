@@ -1,23 +1,25 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
-const writeGood = require('write-good');
-const fs = require('fs');
+import { execSync } from 'child_process';
+import { writeGood } from 'write-good';
+import { fs } from 'fs';
+import { getInput, setFailed, setOutput } from '@actions/core';
 
 const fileExt = ['md', 'markdown', 'mkdn', 'mkd', 'mdown'];
 
 try {
-  const files = core.getInput('files').split(' ');
-  console.log(`Hello ${files}!`, typeof(files));
+  const files = getInput('files').split(' ');
+  const output = execSync('ls', { encoding: 'utf-8' });
+  console.log(`Hello ${files}!`, typeof files, output);
   const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
+  setOutput('time', time);
   files.forEach((file) => {
-    if (fileExt.includes(file.split('.').pop().toLowerCase())) fs.readFile(file, 'utf8', (err, data) => {
-      if (err) core.setFailed(err);
-      const suggestions = writeGood(data);
-      if (suggestions.length > 0) core.setFailed(suggestions);
-    });
+    if (fileExt.includes(file.split('.').pop().toLowerCase())) {
+      fs.readFile(file, 'utf8', (err, data) => {
+        if (err) setFailed(err);
+        const suggestions = writeGood(data);
+        if (suggestions.length > 0) setFailed(suggestions);
+      });
+    }
   });
 } catch (err) {
-  core.setFailed(err.message);
+  setFailed(err.message);
 }
-
