@@ -15,7 +15,8 @@ try {
       fs.readFile(file, 'utf8', (err, data) => {
         if (err) core.setFailed(err);
         const suggestions = writeGood(data);
-        if (suggestions.length > 0) core.setFailed(`file: ${file}, suggestions: ${suggestions}`);
+        const jsonSuggestions = JSON.stringify(suggestions);
+        if (suggestions.length > 0) core.setFailed(`file: ${file}, suggestions: ${jsonSuggestions}`);
       });
     }
   });
