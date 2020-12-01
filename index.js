@@ -7,7 +7,7 @@ const fileExt = ['md', 'markdown', 'mkdn', 'mkd', 'mdown'];
 
 try {
   // const filess = core.getInput('files').split(' ');
-  const files = execSync('git ls-files', { encoding: 'utf-8' });
+  const files = execSync('git ls-files', { encoding: 'utf-8' }).split('\n');
   const time = (new Date()).toTimeString();
   core.setOutput('time', time);
   files.forEach((file) => {
