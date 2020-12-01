@@ -13,6 +13,7 @@ try {
   files.forEach((file) => {
     console.log(file, typeof(file));
     if (fileExt.includes(file.split('.').pop().toLowerCase())) fs.readFile(files, 'utf8', (err, data) => {
+      console.log(data);
       if (err) core.setFailed(err);
       const suggestions = writeGood(data);
       if (suggestions.length > 0) core.setFailed(suggestions);
