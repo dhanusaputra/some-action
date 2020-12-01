@@ -1,6 +1,6 @@
 me: 'Write Good'
 inputs:
-  files:
+  file-ext:
     required: true
 outputs:
   time:

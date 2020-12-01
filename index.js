@@ -3,11 +3,9 @@ const writeGood = require('write-good');
 const fs = require('fs');
 const core = require('@actions/core');
 
-const fileExt = ['md', 'markdown', 'mkdn', 'mkd', 'mdown'];
-
 try {
-  // const filess = core.getInput('files').split(' ');
   const files = execSync('git ls-files', { encoding: 'utf-8' }).split('\n');
+  const fileExt = core.getInput('file-ext').split(' ');
   const time = (new Date()).toTimeString();
   core.setOutput('time', time);
   files.forEach((file) => {
