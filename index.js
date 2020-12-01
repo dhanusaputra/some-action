@@ -11,7 +11,7 @@ try {
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
   files.forEach((file) => {
-    console.log(file, typeof(file));
+    console.log(file, typeof(file), file.split('.').pop().toLowerCase());
     if (fileExt.includes(file.split('.').pop().toLowerCase())) fs.readFile(files, 'utf8', (err, data) => {
       console.log(data);
       if (err) core.setFailed(err);
