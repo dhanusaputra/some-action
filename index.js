@@ -6,7 +6,7 @@ const fs = require('fs');
 const fileExt = ['.md', '.markdown', 'mkdn', 'mkd', 'mdown'];
 
 try {
-  const files = core.getInput('files').split(/\r?\n/);
+  const files = core.getInput('files').split(' ');
   console.log(`Hello ${files}!`, typeof(files));
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
