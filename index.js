@@ -3,15 +3,14 @@ const github = require('@actions/github');
 const writeGood = require('write-good');
 const fs = require('fs');
 
-const fileExt = ['.md', '.markdown', 'mkdn', 'mkd', 'mdown'];
+const fileExt = ['md', 'markdown', 'mkdn', 'mkd', 'mdown'];
 
 try {
-  const files = core.getInput('files').split(' ');
+  const files = core.getInput('files').split('\n');
   console.log(`Hello ${files}!`, typeof(files));
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
   files.forEach((file) => {
-    console.log(file, typeof(file), file.split('.').pop().toLowerCase());
     if (fileExt.includes(file.split('.').pop().toLowerCase())) fs.readFile(files, 'utf8', (err, data) => {
       console.log(data);
       if (err) core.setFailed(err);
