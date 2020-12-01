@@ -7,10 +7,11 @@ const fileExt = ['.md', '.markdown', 'mkdn', 'mkd', 'mdown'];
 
 try {
   const files = core.getInput('files').split(/\r?\n/);
-  console.log(`Hello ${files}!`);
+  console.log(`Hello ${files}!`, typeof(files));
   const time = (new Date()).toTimeString();
   core.setOutput("time", time);
   files.forEach((file) => {
+    console.log(file, typeof(file));
     if (fileExt.includes(file.split('.').pop().toLowerCase())) fs.readFile(files, 'utf8', (err, data) => {
       if (err) core.setFailed(err);
       const suggestions = writeGood(data);
