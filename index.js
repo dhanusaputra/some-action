@@ -1,25 +1,25 @@
-import { execSync } from 'child_process';
-import { writeGood } from 'write-good';
-import { fs } from 'fs';
-import { getInput, setFailed, setOutput } from '@actions/core';
+const { execSync } = require('child_process');
+const writeGood = require('write-good');
+const fs = require('fs');
+const core = require('@actions/core');
 
 const fileExt = ['md', 'markdown', 'mkdn', 'mkd', 'mdown'];
 
 try {
-  const files = getInput('files').split(' ');
+  const files = core.getInput('files').split(' ');
   const output = execSync('ls', { encoding: 'utf-8' });
   console.log(`Hello ${files}!`, typeof files, output);
   const time = (new Date()).toTimeString();
-  setOutput('time', time);
+  core.setOutput('time', time);
   files.forEach((file) => {
     if (fileExt.includes(file.split('.').pop().toLowerCase())) {
       fs.readFile(file, 'utf8', (err, data) => {
-        if (err) setFailed(err);
+        if (err) core.setFailed(err);
         const suggestions = writeGood(data);
-        if (suggestions.length > 0) setFailed(suggestions);
+        if (suggestions.length > 0) core.setFailed(suggestions);
       });
     }
   });
 } catch (err) {
-  setFailed(err.message);
+  core.setFailed(err.message);
 }
